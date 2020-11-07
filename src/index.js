@@ -1,22 +1,29 @@
 var http = require("http");
+
 const httpServer = http.createServer(handleServer);
+
+
 function handleServer(req, res) {
   if(req.url=='/welcome'){
-  res.write('Welcome to Dominose');
-  //res.end();
+      res.statusCode=200;
+      res.setHeader("Content-Type","text/plain");
+  res.end('Welcome to Dominos!');
   }
   else if(req.url=='/contact'){
-    res.write(JSON.stringify({
+      const contactobj={
         phone: '18602100000',
         email: 'guestcaredominos@jublfood.com'
-        }));
-  ///  res.end();
+      }
+      res.statusCode=200;
+      res.setHeader("Content-Type","application/json");
+    res.end(JSON.stringify(contactobj));
   }
   else{
-res.write("404");
-//res.end();
+res.writeHead(404).end("page not found");
   }
+
 }
-//console.log('listening for client request....');
+
+console.log('listening for client request....');
 httpServer.listen(8081);
 module.exports = httpServer;
